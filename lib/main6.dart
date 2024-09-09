@@ -31,6 +31,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   String _text = "";
+  bool _prime = false;
 
   void _incrementCounter() {
     setState(() {
@@ -39,6 +40,18 @@ class _MyHomePageState extends State<MyHomePage> {
         _text = "奇数です";
       } else {
         _text = "偶数です";
+      }
+      _prime = true;
+      if (_counter < 2) {
+        _prime = false;
+      } else {
+        int i = 2;
+        while (i * i <= _counter) {
+          if (_counter % i == 0) {
+            _prime = false;
+          }
+          i = i + 1;
+        }
       }
     });
   }
@@ -62,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Text('$_text'),
-            if (_counter == 2)
+            if (_prime)
               const Text(
                 '素数です',
               ),
