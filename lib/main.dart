@@ -30,6 +30,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool _flag = false;
+
+  // ボタンタップ時にフラグを切り替える
+  _click() async {
+    setState(() {
+      _flag = !_flag;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,59 +48,31 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.purple,
       ),
       body: Column(
-        children: [
-          const Text("HelloWorld"),
-          const Text("ハローワールド"),
-          TextButton(
-            onPressed: () => {print("ボタンが押されたよ")},
-            child: const Text("テキストボタン"),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // 角丸を適用
-                  ),
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          AnimatedOpacity(
+              opacity: _flag ? 0.1 : 1.0,
+              duration: Duration(seconds: 3),
+              child: Text(
+                "福岡情報校",
+                style: TextStyle(
+                  color: Colors.blue, // 文字色を青に設定
+                  fontSize: 80, // フォントサイズを20に設定
                 ),
-                onPressed: () {},
-                child: const Icon(
-                  Icons.favorite,
-                  color: Colors.pink,
-                  size: 24.0,
-                ),
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // 角丸を適用
-                  ),
-                ),
-                onPressed: () {},
-                child: const Icon(
-                  Icons.audiotrack,
-                  color: Colors.green,
-                  size: 30.0,
-                ),
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // 角丸を適用
-                  ),
-                ),
-                onPressed: () {},
-                child: const Icon(
-                  Icons.beach_access,
-                  color: Colors.blue,
-                  size: 36.0,
-                ),
-              ),
-            ],
-          ),
+              )),
+          AnimatedAlign(
+            duration: const Duration(seconds: 3),
+            alignment: _flag ? Alignment.topLeft : Alignment.topRight,
+            child: Image.network(
+              'https://dormy-ac.com/page/o-hara-nmb/img/top/mv-title.png',
+              width: 200, // 画像の幅を指定
+              height: 100, // 画像の高さを指定
+            ),
+          )
         ],
       ),
+      floatingActionButton:
+          FloatingActionButton(onPressed: _click, child: const Icon(Icons.add)),
     );
   }
 }
